@@ -14,9 +14,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
+            justify-content: flex-start; /* Align content to the top for scrolling */
+            height: auto; /* Adjust height for content */
+            overflow-y: scroll; /* Add vertical scrolling */
         }
 
         h1 {
@@ -205,4 +205,33 @@
             q6: "HTML",
             q7: "101",
             q8: "Earth",
-            q[_{{{CITATION{{{_1{](https://github.com/buribalazs/smooth-drag-order/tree/7b40d21d076c3e31765f61481f537beaf4c5ec9f/README.md)[_{{{CITATION{{{_2{](https://github.com/jfhr/ctf/tree/6056b5715928b9b32c1bc449abcc81b0146ff244/index.php)
+            q9: "FF",
+            q10: "echo"
+        };
+
+        function checkIndividualAnswer(inputId, resultId) {
+            const input = document.getElementById(inputId).value.trim();
+            const result = document.getElementById(resultId);
+            if (input.toLowerCase() === answers[inputId].toLowerCase()) {
+                result.textContent = "Correct!";
+                result.style.color = "#00ff00";
+            } else {
+                result.textContent = "Incorrect!";
+                result.style.color = "red";
+            }
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            for (const [id, answer] of Object.entries(answers)) {
+                const input = document.getElementById(id).value.trim();
+                if (input.toLowerCase() === answer.toLowerCase()) {
+                    score++;
+                }
+            }
+            const result = document.getElementById("result");
+            result.textContent = `You scored ${score} out of ${Object.keys(answers).length}.`;
+        }
+    </script>
+</body>
+</html>
