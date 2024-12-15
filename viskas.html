@@ -14,9 +14,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
+            justify-content: flex-start; /* Align content to the top for scrolling */
+            height: auto; /* Adjust height for content */
+            overflow-y: scroll; /* Add vertical scrolling */
         }
 
         h1 {
@@ -28,8 +28,6 @@
             grid-template-columns: 1fr 1fr;
             gap: 20px;
             width: 80%;
-            overflow-y: scroll;
-            height: 80vh;
         }
 
         .question {
@@ -106,7 +104,7 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to the Matrix CTF</h1>
+    <h1>Welcome to the MR CTF</h1>
     <div id="questions">
         <!-- Easy Questions -->
         <div class="question">
@@ -196,7 +194,7 @@
     </div>
     <input type="button" value="Submit Answers" onclick="checkAnswers()">
     <div id="result"></div>
-    
+
     <script>
         const answers = {
             q1: "4",
@@ -208,32 +206,32 @@
             q7: "101",
             q8: "Earth",
             q9: "FF",
-            q10: "Echo"
+            q10: "echo"
         };
+
+        function checkIndividualAnswer(inputId, resultId) {
+            const input = document.getElementById(inputId).value.trim();
+            const result = document.getElementById(resultId);
+            if (input.toLowerCase() === answers[inputId].toLowerCase()) {
+                result.textContent = "Correct!";
+                result.style.color = "#00ff00";
+            } else {
+                result.textContent = "Incorrect!";
+                result.style.color = "red";
+            }
+        }
 
         function checkAnswers() {
             let score = 0;
-            let total = Object.keys(answers).length;
-
-            for (let key in answers) {
-                const userAnswer = document.getElementById(key).value.trim();
-                if (userAnswer.toLowerCase() === answers[key].toLowerCase()) {
+            for (const [id, answer] of Object.entries(answers)) {
+                const input = document.getElementById(id).value.trim();
+                if (input.toLowerCase() === answer.toLowerCase()) {
                     score++;
                 }
             }
-
-            const resultDiv = document.getElementById("result");
-            resultDiv.textContent = `You answered ${score} out of ${total} questions correctly!`;
+            const result = document.getElementById("result");
+            result.textContent = `You scored ${score} out of ${Object.keys(answers).length}.`;
         }
-
-        function checkIndividualAnswer(questionId, resultId) {
-            const userAnswer = document.getElementById(questionId).value.trim();
-            const correctAnswer = answers[questionId];
-
-            const resultDiv = document.getElementById(resultId);
-            if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
-                resultDiv.textContent = "Correct!";
-                resultDiv.style.color = "#00ff00";
-            } else {
-                resultDiv.textContent = "Incorrect!";
-                resultDiv.style.color = "#ff0000[_{{{CITATION{{{_1{](https://github.com/jfhr/ctf/tree/6056b5715928b9b32c1bc449abcc81b0146ff244/index.php)
+    </script>
+</body>
+</html>
