@@ -86,16 +86,16 @@ signOutBtn.addEventListener("click", async () => {
 });
 
 const answers = {
-  q1: "4",
-  q2: "Paris",
-  q3: "blue",
-  q4: "30",
-  q5: "35",
-  q6: "HTML",
-  q7: "101",
-  q8: "Earth",
-  q9: "FF",
-  q10: "echo",
+  q1: "1",
+  q2: "1",
+  q3: "1",
+  q4: "1",
+  q5: "1",
+  q6: "1",
+  q7: "1",
+  q8: "1",
+  q9: "1",
+  q10: "1",
 };
 
 function checkIndividualAnswer(inputId, resultId) {
