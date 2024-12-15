@@ -105,13 +105,14 @@
 </head>
   <body>
     <h1>Welcome to the MR CTF</h1>
-
+ <script src=".script.js" type="module"></script>
     <div id="auth-section">
       <button id="sign-in-btn">Sign In with Gmail</button>
-      <button id="sign-out-btn" style="display: none">Sign Out</button>
+     
       <p id="user-info" style="display: none">
         Logged in as: <span id="user-email"></span>
       </p>
+         <button id="sign-out-btn" style="display: none">Sign Out</button>
     </div>
 
     <div id="questions" style="display: none">
@@ -276,6 +277,6 @@
       <h2>Leaderboard</h2>
       <ul id="leaderboard"></ul>
     </div>
-    <script src=".script.js" type="module"></script>
+   
   </body>
 </html>
