@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
 import {
   getAuth,
-  signInWithPopup,https://github.com/Katahulu/CTF
+  signInWithPopup,
   GoogleAuthProvider,
   signOut,
   onAuthStateChanged,
@@ -86,16 +86,16 @@ signOutBtn.addEventListener("click", async () => {
 });
 
 const answers = {
-  q1: "MR{Allsafe}",
-  q2: "1",
-  q3: "1",
-  q4: "1",
-  q5: "1",
-  q6: "1",
-  q7: "1",
-  q8: "1",
-  q9: "1",
-  q10: "1",
+  q1: "4",
+  q2: "Paris",
+  q3: "blue",
+  q4: "30",
+  q5: "35",
+  q6: "HTML",
+  q7: "101",
+  q8: "Earth",
+  q9: "FF",
+  q10: "echo",
 };
 
 function checkIndividualAnswer(inputId, resultId) {
