@@ -271,6 +271,29 @@
       id="submit-answers-btn"
       style="display: none"
     />
+    <script> function checkIndividualAnswer(inputId, resultId) {
+            const input = document.getElementById(inputId).value.trim();
+            const result = document.getElementById(resultId);
+            if (input.toLowerCase() === answers[inputId].toLowerCase()) {
+                result.textContent = "Correct!";
+                result.style.color = "#00ff00";
+            } else {
+                result.textContent = "Incorrect!";
+                result.style.color = "red";
+            }
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            for (const [id, answer] of Object.entries(answers)) {
+                const input = document.getElementById(id).value.trim();
+                if (input.toLowerCase() === answer.toLowerCase()) {
+                    score++;
+                }
+            }
+            const result = document.getElementById("result");
+            result.textContent = `You scored ${score} out of ${Object.keys(answers).length}.`;
+        }</script>
     <div id="result"></div>
     <div id="leaderboard-section" style="display: none">
       <h2>Leaderboard</h2>
