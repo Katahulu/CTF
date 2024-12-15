@@ -14,9 +14,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            height: auto;
-            overflow-y: scroll;
+            justify-content: space-between; /* Ensures footer stays at the bottom */
+            min-height: 100vh; /* Makes the body take full screen height */
         }
 
         h1 {
@@ -148,6 +147,14 @@
             border-bottom: 1px solid #00ff00;
         }
 
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background-color: black;
+            color: #00ff00;
+            border-top: 1px solid #00ff00;
+        }
     </style>
 </head>
 <body>
