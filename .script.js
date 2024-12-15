@@ -110,7 +110,7 @@ function checkIndividualAnswer(inputId, resultId) {
   }
 }
 
-async function checkAnswers() {
+function checkAnswers() {
   let score = 0;
   for (const [id, answer] of Object.entries(answers)) {
     const input = document.getElementById(id).value.trim();
