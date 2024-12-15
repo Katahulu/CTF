@@ -84,5 +84,3 @@ signOutBtn.addEventListener("click", async () => {
   submitAnswersBtn.style.display = "none";
   leaderboardSection.style.display = "none";
 });
-
-}
