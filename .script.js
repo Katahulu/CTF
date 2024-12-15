@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.19.1/firebase-app.js";
 import {
   getAuth,
-  signInWithPopup,
+  signInWithPopup,https://github.com/Katahulu/CTF
   GoogleAuthProvider,
   signOut,
   onAuthStateChanged,
@@ -86,7 +86,7 @@ signOutBtn.addEventListener("click", async () => {
 });
 
 const answers = {
-  q1: "1",
+  q1: "MR{Allsafe}",
   q2: "1",
   q3: "1",
   q4: "1",
