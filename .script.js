@@ -98,7 +98,7 @@ const answers = {
   q10: "echo",
 };
 
-function checkIndividualAnswer(inputId, resultId) {
+async function checkIndividualAnswer(inputId, resultId) {
   const input = document.getElementById(inputId).value.trim();
   const result = document.getElementById(resultId);
   if (input.toLowerCase() === answers[inputId].toLowerCase()) {
