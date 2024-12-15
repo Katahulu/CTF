@@ -1,260 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CTF Challenge</title>
-    <style>
-        body {
-            background-color: black;
-            color: #00ff00;
-            font-family: 'Courier New', Courier, monospace;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            height: auto;
-            overflow-y: scroll;
+<script>
+    // Authentication and UI Logic
+    const loginBtn = document.getElementById("login-btn");
+    const logoutBtn = document.getElementById("logout-btn");
+    const userInfo = document.getElementById("user-info");
+    const userEmail = document.getElementById("user-email");
+
+    loginBtn.addEventListener("click", async () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        try {
+            const result = await auth.signInWithPopup(provider);
+            const user = result.user;
+            userEmail.textContent = user.email;
+            loginBtn.style.display = "none";
+            logoutBtn.style.display = "block";
+            userInfo.style.display = "block";
+        } catch (error) {
+            console.error("Login failed:", error.message);
         }
+    });
 
-        h1 {
-            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
-        }
-
-        #questions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            width: 80%;
-        }
-
-        .question {
-            margin: 20px;
-            padding: 20px;
-            border: 1px solid #00ff00;
-            border-radius: 10px;
-            background-color: rgba(0, 0, 0, 0.8);
-            position: relative;
-        }
-
-        .difficulty {
-            position: absolute;
-            top: -10px;
-            left: 20px;
-            background-color: #00ff00;
-            color: black;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-
-        a.button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #00ff00;
-            color: black;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        a.button:hover {
-            background-color: black;
-            color: #00ff00;
-            border: 1px solid #00ff00;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            background-color: black;
-            border: 1px solid #00ff00;
-            border-radius: 5px;
-            color: #00ff00;
-            padding: 10px;
-            font-size: 1em;
-        }
-
-        input[type="button"] {
-            background-color: black;
-            border: 1px solid #00ff00;
-            border-radius: 5px;
-            color: #00ff00;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-
-        input[type="button"]:hover {
-            background-color: #00ff00;
-            color: black;
-        }
-
-        #result {
-            margin-top: 20px;
-            font-size: 1.2em;
-        }
-
-        .result-individual {
-            margin-top: 10px;
-            font-size: 1em;
-        }
-    </style>
-</head>
-<body>
-    <h1>Welcome to the MR CTF</h1>
-
-    <!-- Authentication and Registry Section -->
-    <div>
-        <button id="login-btn">Login with Google</button>
-        <button id="logout-btn" style="display: none;">Logout</button>
-        <div id="user-info" style="display: none;">
-            <h3>Welcome, <span id="user-email"></span>!</h3>
-            <form id="registry-form">
-                <label for="name">Name:</label>
-                <input type="text" id="name" placeholder="Enter your name">
-                <input type="button" value="Register" onclick="registerPerson()">
-            </form>
-        </div>
-    </div>
-    <div id="registry-results"></div>
-
-    <div id="questions">
-        <!-- Questions Section -->
-        <div class="question">
-            <div class="difficulty">Easy</div>
-            <p>1. What is 2 + 2?</p>
-            <a href="files/MESSAGE1.png" download="msg.png" class="button">Download Challenge</a>
-            <input type="text" id="q1" placeholder="Your answer">
-            <input type="button" value="Check" onclick="checkIndividualAnswer('q1', 'q1-result')">
-            <div id="q1-result" class="result-individual"></div>
-        </div>
-        <!-- Additional questions can be added similarly -->
-    </div>
-    <input type="button" value="Submit Answers" onclick="checkAnswers()">
-    <div id="result"></div>
-
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
-
-    <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "your-api-key",
-            authDomain: "your-auth-domain",
-            projectId: "your-project-id",
-            storageBucket: "your-storage-bucket",
-            messagingSenderId: "your-messaging-sender-id",
-            appId: "your-app-id"
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        // Authentication Logic
-        const loginBtn = document.getElementById("login-btn");
-        const logoutBtn = document.getElementById("logout-btn");
-        const userInfo = document.getElementById("user-info");
-        const userEmail = document.getElementById("user-email");
-
-        loginBtn.addEventListener("click", async () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            try {
-                const result = await auth.signInWithPopup(provider);
-                const user = result.user;
-                userEmail.textContent = user.email;
-                loginBtn.style.display = "none";
-                logoutBtn.style.display = "block";
-                userInfo.style.display = "block";
-                fetchRegistry();
-            } catch (error) {
-                console.error("Login failed:", error.message);
-            }
+    logoutBtn.addEventListener("click", () => {
+        auth.signOut().then(() => {
+            loginBtn.style.display = "block";
+            logoutBtn.style.display = "none";
+            userInfo.style.display = "none";
         });
+    });
 
-        logoutBtn.addEventListener("click", () => {
-            auth.signOut().then(() => {
-                loginBtn.style.display = "block";
-                logoutBtn.style.display = "none";
-                userInfo.style.display = "none";
+    // Registry Functionality
+    async function registerPerson() {
+        const name = document.getElementById("name").value.trim();
+        const email = userEmail.textContent;
+
+        if (!name || !email) {
+            alert("Please provide your name.");
+            return;
+        }
+
+        try {
+            await db.collection("people").add({ name, email });
+            alert("Person registered successfully!");
+            fetchRegistry(); // Refresh the registry list
+        } catch (error) {
+            console.error("Error registering person:", error.message);
+        }
+    }
+
+    async function fetchRegistry() {
+        const resultsDiv = document.getElementById("registry-results");
+        resultsDiv.innerHTML = "<h2>Registry:</h2>";
+        try {
+            const snapshot = await db.collection("people").get();
+            snapshot.forEach(doc => {
+                const person = doc.data();
+                resultsDiv.innerHTML += `<p>${person.name} - ${person.email}</p>`;
             });
-        });
-
-        // Registry Logic
-        async function registerPerson() {
-            const name = document.getElementById("name").value.trim();
-            const email = userEmail.textContent;
-
-            if (!name || !email) {
-                alert("Please provide your name.");
-                return;
-            }
-
-            try {
-                await db.collection("people").add({ name, email });
-                alert("Person registered successfully!");
-                fetchRegistry();
-            } catch (error) {
-                console.error("Error registering person:", error.message);
-            }
+        } catch (error) {
+            console.error("Error fetching registry:", error.message);
         }
+    }
 
-        async function fetchRegistry() {
-            const resultsDiv = document.getElementById("registry-results");
-            resultsDiv.innerHTML = "<h2>Registry:</h2>";
-            try {
-                const snapshot = await db.collection("people").get();
-                snapshot.forEach(doc => {
-                    const person = doc.data();
-                    resultsDiv.innerHTML += `<p>${person.name} - ${person.email}</p>`;
-                });
-            } catch (error) {
-                console.error("Error fetching registry:", error.message);
-            }
+    // Fetch registry automatically when authenticated
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            fetchRegistry();
         }
-
-        // Fetch registry automatically when authenticated
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                fetchRegistry();
-            }
-        });
-
-        // Questions Logic
-        const answers = {
-            q1: "4",
-            // Add more answers here
-        };
-
-        function checkIndividualAnswer(inputId, resultId) {
-            const input = document.getElementById(inputId).value.trim();
-            const result = document.getElementById(resultId);
-            if (input.toLowerCase() === answers[inputId].toLowerCase()) {
-                result.textContent = "Correct!";
-                result.style.color = "#00ff00";
-            } else {
-                result.textContent = "Incorrect!";
-                result.style.color = "red";
-            }
-        }
-
-        function checkAnswers() {
-            let score = 0;
-            for (const [id, answer] of Object.entries(answers)) {
-                const input = document.getElementById(id).value.trim();
-                if (input.toLowerCase() === answer.toLowerCase()) {
-                    score++;
-                }
-            }
-            const result = document.getElementById("result");
-            result.textContent = `You scored ${score} out of ${Object.keys(answers).length}.`;
-        }
-    </script>
-</body>
-</html>
+    });
+</script>
