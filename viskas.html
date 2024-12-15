@@ -14,9 +14,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start; /* Align content to the top for scrolling */
-            height: auto; /* Adjust height for content */
-            overflow-y: scroll; /* Add vertical scrolling */
+            justify-content: flex-start;
+            height: auto;
+            overflow-y: scroll;
         }
 
         h1 {
@@ -105,8 +105,24 @@
 </head>
 <body>
     <h1>Welcome to the MR CTF</h1>
+
+    <!-- Authentication and Registry Section -->
+    <div>
+        <button id="login-btn">Login with Google</button>
+        <button id="logout-btn" style="display: none;">Logout</button>
+        <div id="user-info" style="display: none;">
+            <h3>Welcome, <span id="user-email"></span>!</h3>
+            <form id="registry-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="Enter your name">
+                <input type="button" value="Register" onclick="registerPerson()">
+            </form>
+        </div>
+    </div>
+    <div id="registry-results"></div>
+
     <div id="questions">
-        <!-- Easy Questions -->
+        <!-- Questions Section -->
         <div class="question">
             <div class="difficulty">Easy</div>
             <p>1. What is 2 + 2?</p>
@@ -115,98 +131,105 @@
             <input type="button" value="Check" onclick="checkIndividualAnswer('q1', 'q1-result')">
             <div id="q1-result" class="result-individual"></div>
         </div>
-        <div class="question">
-            <div class="difficulty">Easy</div>
-            <p>2. What is the capital of France?</p>
-            <a href="files/MESSAGE2.png" download="msg.png" class="button">Download Challenge</a>
-            <input type="text" id="q2" placeholder="Your answer">
-            <input type="button" value="Check" onclick="checkIndividualAnswer('q2', 'q2-result')">
-            <div id="q2-result" class="result-individual"></div>
-        </div>
-        <div class="question">
-            <div class="difficulty">Easy</div>
-            <p>3. What is the color of the sky on a clear day?</p>
-            <a href="files/MESSAGE3.png" download="msg.png" class="button">Download Challenge</a>
-            <input type="text" id="q3" placeholder="Your answer">
-            <input type="button" value="Check" onclick="checkIndividualAnswer('q3', 'q3-result')">
-            <div id="q3-result" class="result-individual"></div>
-        </div>
-        <div class="question">
-            <div class="difficulty">Easy</div>
-            <p>4. What is 5 * 6?</p>
-            <a href="files/MESSAGE4.png" download="msg.png" class="button">Download Challenge</a>
-            <input type="text" id="q4" placeholder="Your answer">
-            <input type="button" value="Check" onclick="checkIndividualAnswer('q4', 'q4-result')">
-            <div id="q4-result" class="result-individual"></div>
-        </div>
-
-        <!-- Medium Questions -->
-        <div class="question">
-            <div class="difficulty">Medium</div>
-            <p>5. What is the result of 12 + 23?</p>
-            <a href="files/MESSAGE5.png" download="msg.png" class="button">Download Challenge</a>
-            <input type="text" id="q5" placeholder="Your answer">
-            <input type="button" value="Check" onclick="checkIndividualAnswer('q5', 'q5-result')">
-            <div id="q5-result" class="result-individual"></div>
-        </div>
-        <div class="question">
-            <div class="difficulty">Medium</div>
-            <p>6. What programming language is this website written in?</p>
-            <a href="files/MESSAGE6.png" download="msg.png" class="button">Download Challenge</a>
-            <input type="text" id="q6" placeholder="Your answer">
-            <input type="button" value="Check" onclick="checkIndividualAnswer('q6', 'q6-result')">
-            <div id="q6-result" class="result-individual"></div>
-        </div>
-        <div class="question">
-            <div class="difficulty">Medium</div>
-            <p>7. What is the binary representation of 5?</p>
-            <a href="files/MESSAGE7.png" download="msg.png" class="button">Download Challenge</a>
-            <input type="text" id="q7" placeholder="Your answer">
-            <input type="button" value="Check" onclick="checkIndividualAnswer('q7', 'q7-result')">
-            <div id="q7-result" class="result-individual"></div>
-        </div>
-        <div class="question">
-            <div class="difficulty">Medium</div>
-            <p>8. What is the third planet from the Sun?</p>
-            <a href="files/MESSAGE8.png" download="msg.png" class="button">Download Challenge</a>
-            <input type="text" id="q8" placeholder="Your answer">
-            <input type="button" value="Check" onclick="checkIndividualAnswer('q8', 'q8-result')">
-            <div id="q8-result" class="result-individual"></div>
-        </div>
-
-        <!-- Hard Questions -->
-        <div class="question">
-            <div class="difficulty">Hard</div>
-            <p>9. What is the hexadecimal value of 255?</p>
-            <a href="files/MESSAGE9.png" download="msg.png" class="button">Download Challenge</a>
-            <input type="text" id="q9" placeholder="Your answer">
-            <input type="button" value="Check" onclick="checkIndividualAnswer('q9', 'q9-result')">
-            <div id="q9-result" class="result-individual"></div>
-        </div>
-        <div class="question">
-            <div class="difficulty">Hard</div>
-            <p>10. Solve this riddle: I speak without a mouth and hear without ears. What am I?</p>
-            <a href="files/MESSAGE10.png" download="msg.png" class="button">Download Challenge</a>
-            <input type="text" id="q10" placeholder="Your answer">
-            <input type="button" value="Check" onclick="checkIndividualAnswer('q10', 'q10-result')">
-            <div id="q10-result" class="result-individual"></div>
-        </div>
+        <!-- Additional questions can be added similarly -->
     </div>
     <input type="button" value="Submit Answers" onclick="checkAnswers()">
     <div id="result"></div>
 
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js"></script>
+
     <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "your-api-key",
+            authDomain: "your-auth-domain",
+            projectId: "your-project-id",
+            storageBucket: "your-storage-bucket",
+            messagingSenderId: "your-messaging-sender-id",
+            appId: "your-app-id"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Authentication Logic
+        const loginBtn = document.getElementById("login-btn");
+        const logoutBtn = document.getElementById("logout-btn");
+        const userInfo = document.getElementById("user-info");
+        const userEmail = document.getElementById("user-email");
+
+        loginBtn.addEventListener("click", async () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            try {
+                const result = await auth.signInWithPopup(provider);
+                const user = result.user;
+                userEmail.textContent = user.email;
+                loginBtn.style.display = "none";
+                logoutBtn.style.display = "block";
+                userInfo.style.display = "block";
+                fetchRegistry();
+            } catch (error) {
+                console.error("Login failed:", error.message);
+            }
+        });
+
+        logoutBtn.addEventListener("click", () => {
+            auth.signOut().then(() => {
+                loginBtn.style.display = "block";
+                logoutBtn.style.display = "none";
+                userInfo.style.display = "none";
+            });
+        });
+
+        // Registry Logic
+        async function registerPerson() {
+            const name = document.getElementById("name").value.trim();
+            const email = userEmail.textContent;
+
+            if (!name || !email) {
+                alert("Please provide your name.");
+                return;
+            }
+
+            try {
+                await db.collection("people").add({ name, email });
+                alert("Person registered successfully!");
+                fetchRegistry();
+            } catch (error) {
+                console.error("Error registering person:", error.message);
+            }
+        }
+
+        async function fetchRegistry() {
+            const resultsDiv = document.getElementById("registry-results");
+            resultsDiv.innerHTML = "<h2>Registry:</h2>";
+            try {
+                const snapshot = await db.collection("people").get();
+                snapshot.forEach(doc => {
+                    const person = doc.data();
+                    resultsDiv.innerHTML += `<p>${person.name} - ${person.email}</p>`;
+                });
+            } catch (error) {
+                console.error("Error fetching registry:", error.message);
+            }
+        }
+
+        // Fetch registry automatically when authenticated
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                fetchRegistry();
+            }
+        });
+
+        // Questions Logic
         const answers = {
             q1: "4",
-            q2: "Paris",
-            q3: "blue",
-            q4: "30",
-            q5: "35",
-            q6: "HTML",
-            q7: "101",
-            q8: "Earth",
-            q9: "FF",
-            q10: "echo"
+            // Add more answers here
         };
 
         function checkIndividualAnswer(inputId, resultId) {
