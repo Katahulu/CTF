@@ -84,3 +84,77 @@ signOutBtn.addEventListener("click", async () => {
   submitAnswersBtn.style.display = "none";
   leaderboardSection.style.display = "none";
 });
+
+const answers = {
+  q1: "1",
+  q2: "1",
+  q3: "1",
+  q4: "1",
+  q5: "1",
+  q6: "1",
+  q7: "1",
+  q8: "1",
+  q9: "1",
+  q10: "1",
+};
+
+function checkIndividualAnswer(inputId, resultId) {
+  const input = document.getElementById(inputId).value.trim();
+  const result = document.getElementById(resultId);
+  if (input.toLowerCase() === answers[inputId].toLowerCase()) {
+    result.textContent = "Correct!";
+    result.style.color = "#00ff00";
+  } else {
+    result.textContent = "Incorrect!";
+    result.style.color = "red";
+  }
+}
+
+async function checkAnswers() {
+  let score = 0;
+  for (const [id, answer] of Object.entries(answers)) {
+    const input = document.getElementById(id).value.trim();
+    if (input.toLowerCase() === answer.toLowerCase()) {
+      score++;
+    }
+  }
+  const result = document.getElementById("result");
+  result.textContent = `You scored ${score} out of ${Object.keys(answers).length}.`;
+
+  if (score === Object.keys(answers).length) {
+    leaderboardSection.style.display = "block";
+
+    const user = auth.currentUser;
+    const userName = user.displayName;
+    const userEmail = user.email;
+
+    await updateLeaderboard(userName, userEmail);
+  }
+}
+
+async function updateLeaderboard(userName, userEmail) {
+  await addDoc(collection(db, "leaderboard"), {
+    name: userName,
+    email: userEmail,
+    timestamp: new Date(),
+  });
+
+  displayLeaderboard();
+}
+
+async function displayLeaderboard() {
+  leaderboardList.innerHTML = "";
+
+  const leaderboardQuery = query(
+    collection(db, "leaderboard"),
+    orderBy("timestamp", "desc")
+  );
+  const querySnapshot = await getDocs(leaderboardQuery);
+
+  querySnapshot.forEach((doc) => {
+    const entry = doc.data();
+    const listItem = document.createElement("li");
+    listItem.textContent = `${entry.name} (${entry.email})`;
+    leaderboardList.appendChild(listItem);
+  });
+}
