@@ -14,12 +14,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between; /* Ensures footer stays at the bottom */
-            min-height: 100vh; /* Makes the body take full screen height */
+            justify-content: space-between;
+            min-height: 100vh;
         }
 
         h1 {
             text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+        }
+
+        .instructions {
+            font-size: 1.2em;
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
         }
 
         #questions {
@@ -159,6 +166,10 @@
 </head>
 <body>
     <h1>Welcome to the MR CTF</h1>
+    <div class="instructions">
+        <p>This is a cybersecurity-themed Capture The Flag (CTF) challenge designed to test your problem-solving and technical skills. Each question has a hint and a downloadable file to guide you to the solution. Use your skills in analysis, decoding, and observation to uncover the answers.</p>
+        <p>HOW TO PLAY: Solve the challenges, enter your answers with correct form, and check your results. Try to push your limits to the maximum and complete every challenge!</p>
+    </div>
     <div id="questions">
         <!-- Easy Questions -->
         <div class="question">
@@ -167,31 +178,31 @@
 I help you get somewhere, but only if you know.
 I am a code, but not one you can see.
 Find the key and bring it to me.</p>
-            <a href="files/MESSAGE1.png" download="msg.png" class="button">Download Challenge</a>
+            <a href="files/inspect.txt" download="inspect.txt" class="button">Download Challenge</a>
             <input type="text" id="q1" placeholder="Your answer">
             <input type="button" value="Check" onclick="checkIndividualAnswer('q1', 'q1-result')">
             <div id="q1-result" class="result-individual"></div>
         </div>
         <div class="question">
             <div class="difficulty">Easy</div>
-            <p>2. Where does Mr. Robot work? We already know it is something to do with cybersecurity</p>
-            <a href="files/MESSAGE2.png" download="msg.png" class="button">Download Challenge</a>
+            <p>2. Where does Mr. Robot work? We already know it is something to do with cybersecurity.</p>
+            <a href="files/MRROBOT.txt" download="hellofriend.txt" class="button">Download Challenge</a>
             <input type="text" id="q2" placeholder="Your answer">
             <input type="button" value="Check" onclick="checkIndividualAnswer('q2', 'q2-result')">
             <div id="q2-result" class="result-individual"></div>
         </div>
         <div class="question">
             <div class="difficulty">Easy</div>
-            <p>3. What is the color of the sky on a clear day?</p>
-            <a href="files/MESSAGE3.png" download="msg.png" class="button">Download Challenge</a>
+            <p>3.  Look close, pause, and search once more.</p>
+            <a href="files/watch.txt" download="watch.txt" class="button">Download Challenge</a>
             <input type="text" id="q3" placeholder="Your answer">
             <input type="button" value="Check" onclick="checkIndividualAnswer('q3', 'q3-result')">
             <div id="q3-result" class="result-individual"></div>
         </div>
         <div class="question">
             <div class="difficulty">Easy</div>
-            <p>4. What is 5 * 6?</p>
-            <a href="files/MESSAGE4.png" download="msg.png" class="button">Download Challenge</a>
+            <p>4. In the end everyone is either a one or a zero... so... </p>
+            <a href="files/onesandzeros.txt" download="onesandzeros.txt" class="button">Download Challenge</a>
             <input type="text" id="q4" placeholder="Your answer">
             <input type="button" value="Check" onclick="checkIndividualAnswer('q4', 'q4-result')">
             <div id="q4-result" class="result-individual"></div>
@@ -200,23 +211,27 @@ Find the key and bring it to me.</p>
         <!-- Medium Questions -->
         <div class="question">
             <div class="difficulty">Medium</div>
-            <p>5. What is the result of 12 + 23?</p>
-            <a href="files/MESSAGE5.png" download="msg.png" class="button">Download Challenge</a>
+            <p>5. Not all secrets scream for attention; some whisper in shades and hues, hiding where you least expect them. Can you unveil the hidden message concealed within the fabric of this text?</p>
+            <a href="files/change.docx" download="change.docx" class="button">Download Challenge</a>
             <input type="text" id="q5" placeholder="Your answer">
             <input type="button" value="Check" onclick="checkIndividualAnswer('q5', 'q5-result')">
             <div id="q5-result" class="result-individual"></div>
         </div>
         <div class="question">
             <div class="difficulty">Medium</div>
-            <p>6. What programming language is this website written in?</p>
-            <a href="files/MESSAGE6.png" download="msg.png" class="button">Download Challenge</a>
+            <p>6. Can you find something that is not meant to be found? It takes a keen eye to spot what usually is out of ones view.</p>
+            <a href="files/FIND ME.html" download="FIND ME.html" class="button">Download Challenge</a>
             <input type="text" id="q6" placeholder="Your answer">
             <input type="button" value="Check" onclick="checkIndividualAnswer('q6', 'q6-result')">
             <div id="q6-result" class="result-individual"></div>
         </div>
         <div class="question">
             <div class="difficulty">Medium</div>
-            <p>7. What is the binary representation of 5?</p>
+            <p>7. What you see is just a show,
+But deeper secrets lie below.
+Right-click, dig, and do not delay,
+The hidden truth is tucked away.
+            That is the META of todays game.</p>
             <a href="files/MESSAGE7.png" download="msg.png" class="button">Download Challenge</a>
             <input type="text" id="q7" placeholder="Your answer">
             <input type="button" value="Check" onclick="checkIndividualAnswer('q7', 'q7-result')">
@@ -224,8 +239,8 @@ Find the key and bring it to me.</p>
         </div>
         <div class="question">
             <div class="difficulty">Medium</div>
-            <p>8. What is the third planet from the Sun?</p>
-            <a href="files/MESSAGE8.png" download="msg.png" class="button">Download Challenge</a>
+            <p>8. What you are doing is not some kind of MAGIC, just a BYTE of what cybersecurity has to offer.</p>
+            <a href="files/magic.png" download="magic.png" class="button">Download Challenge</a>
             <input type="text" id="q8" placeholder="Your answer">
             <input type="button" value="Check" onclick="checkIndividualAnswer('q8', 'q8-result')">
             <div id="q8-result" class="result-individual"></div>
@@ -234,16 +249,18 @@ Find the key and bring it to me.</p>
         <!-- Hard Questions -->
         <div class="question">
             <div class="difficulty">Hard</div>
-            <p>9. What is the hexadecimal value of 255?</p>
-            <a href="files/MESSAGE9.png" download="msg.png" class="button">Download Challenge</a>
+            <p>9. In a land where secrets are locked away in unseen chambers, the Keeper of the Forgotten Keys stands as the sole guardian of a great treasure. This Keeper is precise, trusting only those who present the correct incantations to gain passage.
+
+Yet, the Keeper is not perfect, it can be deceived by saying that everything is true, even without the real secret. By crafting a special phrase that weaves truth and deception, you may convince the Keeper that you belong.</p>
+            <a href="files/Qwerty.cpp" download="Qwerty.cpp" class="button">Download Challenge</a>
             <input type="text" id="q9" placeholder="Your answer">
             <input type="button" value="Check" onclick="checkIndividualAnswer('q9', 'q9-result')">
             <div id="q9-result" class="result-individual"></div>
         </div>
         <div class="question">
             <div class="difficulty">Hard</div>
-            <p>10. Solve this riddle: I speak without a mouth and hear without ears. What am I?</p>
-            <a href="files/MESSAGE10.png" download="msg.png" class="button">Download Challenge</a>
+            <p>10. This encrypted message has been circulating the internet for quite a while. Can you be like Alan Turing and break the code? Someone said that 23 STEPS must be taken to get the proper answer.</p>
+            <a href="files/MESSAGE.png" download="MESSAGE.png" class="button">Download Challenge</a>
             <input type="text" id="q10" placeholder="Your answer">
             <input type="button" value="Check" onclick="checkIndividualAnswer('q10', 'q10-result')">
             <div id="q10-result" class="result-individual"></div>
@@ -272,16 +289,16 @@ Find the key and bring it to me.</p>
 
     <script>
         const answers = {
-            q1: "MR{93kXz7}",
+            q1: "MR{93kXz7}",    
             q2: "MR{Allsafe}",
-            q3: "1",
+            q3: "MR{aneCnhoJ}",
             q4: "MR{Are_You_A_One_Or_A_Zero?}",
-            q5: "1",
+            q5: "MR{flipper}",
             q6: "MR{MESSAGE.png}",
-            q7: "1",
+            q7: "MR{S1n1c4_yr4_B4lt4l13tuV15?}",
             q8: "MR{You_are_a_wizard_Harry}",
-            q9: "1",
-            q10: "1"
+            q9: "MR{Ju5t_4_Ch1ll_Guy}",
+            q10: "MR{thiswaswaycoolerinmyheadthanitturnedouttobeinreality}"
         };
 
         let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
